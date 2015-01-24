@@ -1,12 +1,14 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class stvarach : MonoBehaviour {
 	public GameObject prefab;
+	public List<GameObject> atoms;
 
 	// Use this for initialization
 	void Start () {
-		
+		atoms = new List<GameObject>();
 	}
 	
 	// Update is called once per frame
@@ -14,8 +16,9 @@ public class stvarach : MonoBehaviour {
 		GameObject atom; 
 		Vector3 start; 
 		start = StartPoint();
-		atom = CreateAtomAtPosition (start);
-		FlingAtom(atom, start, EndPoint());
+		atoms.Add(CreateAtomAtPosition (start));
+	
+		Debug.Log(atoms.Count);
 
 	}
 
@@ -52,14 +55,5 @@ public class stvarach : MonoBehaviour {
 		return collider().size;
 	}
 
-	void FlingAtom(GameObject atom, Vector3 from, Vector3 to) {
-		Debug.Log(from.ToString());
-		Debug.Log(to.ToString());
-		Debug.Log("fliing");
-		Debug.Log(to - from);
-		Debug.Log(">>>>");
-
-		atom.rigidbody.velocity = to - from;
-	}
 
 }
