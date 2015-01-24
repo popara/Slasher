@@ -64,9 +64,12 @@ public class swinger : MonoBehaviour {
 	}
 
 	private float locus_of_point_given_axis_and_axis(float axis, float height, float radius) {
-		print (Mathf.Sqrt (Mathf.Pow (radius, 2) - Mathf.Pow (axis, 2) - Mathf.Pow (height, 2)));
-		return Mathf.Sqrt (Mathf.Pow (radius, 2) - Mathf.Pow (axis, 2) - Mathf.Pow (height, 2));
+		return safe_num(Mathf.Sqrt (Mathf.Pow (radius, 2) - Mathf.Pow (axis, 2) - Mathf.Pow (height, 2)));
 
+	}
+
+	private float safe_num (float num) {
+		return float.IsNaN(num) ? 0 : num;
 	}
 	
 	public Vector3 constrained_by_direction (Vector3 old, Vector3 delta, float radius, int dominant) {
