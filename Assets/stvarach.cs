@@ -4,7 +4,11 @@ using System.Collections.Generic;
 
 public class stvarach : MonoBehaviour {
 	public GameObject prefab;
-	public List<GameObject> atoms;
+	private List<GameObject> atoms;
+	public float maxAtoms; // 
+	public Vector2 randomSpeed; // X is MIN Y is MAX
+	public bool useFixedSpeed;
+	[Range(0, 100)] public int speed = 0;
 
 	// Use this for initialization
 	void Start () {
@@ -15,11 +19,36 @@ public class stvarach : MonoBehaviour {
 	void Update () {
 		GameObject atom; 
 		Vector3 start; 
+		Vector3 end; 
 		start = StartPoint();
-		atoms.Add(CreateAtomAtPosition (start));
-	
-		Debug.Log(atoms.Count);
+		end = EndPoint();
 
+		
+		if (atoms.Count < maxAtoms) {
+			atom = CreateAtomAtPosition (start);
+		
+			Debug.Log(atoms.Count);
+
+			atoms.Add(atom);
+			slobodniAtom atomic = getFreeAtom(atom);
+			atomic.SetDelegate(gameObject);
+			atomic.Fling(start, end, getRandomSpeed());
+			
+		}
+
+	}
+
+	public void Finish(GameObject atom) {
+		atoms.Remove(atom);
+		Destroy(atom);
+	}
+
+	slobodniAtom getFreeAtom (GameObject atom) {
+		return atom.transform.GetComponent<slobodniAtom>();
+	}
+
+	float getRandomSpeed () {
+		return Random.Range(randomSpeed.x, randomSpeed.y);
 	}
 
 	GameObject CreateAtomAtPosition (Vector3 position) {
