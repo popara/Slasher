@@ -27,8 +27,6 @@ public class stvarach : MonoBehaviour {
 		if (atoms.Count < maxAtoms) {
 			atom = CreateAtomAtPosition (start);
 		
-			Debug.Log(atoms.Count);
-
 			atoms.Add(atom);
 			slobodniAtom atomic = getFreeAtom(atom);
 			atomic.SetDelegate(gameObject);
